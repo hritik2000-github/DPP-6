@@ -1,0 +1,146 @@
+INORDER: (RECURSION)
+
+ void solve(TreeNode* root,vector<int>& ans){
+        
+        //base case
+        if(root == NULL){
+            return;
+        }
+        solve(root->left,ans);
+        ans.push_back(root->val);
+        solve(root->right,ans);
+    }
+
+ vector<int> inorderTraversal(TreeNode* root) {
+        
+        vector<int> ans;
+        solve(root,ans);
+        return ans;
+    }
+
+
+
+INORDER: (ITERATIVE)
+
+vector<int> inorderTraversal(TreeNode* root) {
+        
+        vector<int> ans;
+        
+        
+        
+        stack<TreeNode*> st;
+        TreeNode* node = root;
+                  
+        while(true){
+            if(node != NULL){
+                st.push(node);
+                node = node->left;
+            }
+            else{
+                if(st.empty())break;
+                node = st.top();
+                st.pop();
+                ans.push_back(node->val);
+                node = node->right;
+            }
+        }
+        return ans;
+    }
+
+
+
+PREORDER: (RECURSION)
+
+void solve(TreeNode* root,vector<int>& ans){
+     //base case
+        if(root == NULL){
+            return;
+        }
+        ans.push_back(root->val);
+        solve(root->left,ans);
+        solve(root->right,ans);
+    }
+
+vector<int> preorderTraversal(TreeNode* root) {
+        vector<int> ans;
+       solve(root,ans);
+        return ans;
+        
+    }
+
+
+
+PREORDER: (ITERATIVE)
+
+ vector<int> preorderTraversal(TreeNode* root) {
+        
+        vector<int> ans;
+        
+        if(root == NULL)return  ans;
+        
+        stack<TreeNode*> st;
+        
+        st.push(root);
+        
+        while(!st.empty()){
+            TreeNode* node = st.top();
+            ans.push_back(node->val);
+            st.pop();
+            
+            if(node->right)st.push(node->right);
+            if(node->left)st.push(node->left);
+        }
+        return ans;
+    }
+
+
+
+POSTORDER: (RECURSION)
+
+ void solve(TreeNode* root,vector<int>& ans){
+        
+        //base case
+        if(root == NULL){
+            return;
+        }
+        
+        solve(root->left,ans);
+        solve(root->right,ans);
+        ans.push_back(root->val);
+    }
+
+vector<int> postorderTraversal(TreeNode* root) {
+        
+        vector<int> ans;
+        solve(root,ans);
+        return ans;
+    }
+
+
+
+POSTORDER: (ITERATIVE)
+
+ vector<int> postorderTraversal(TreeNode* root) {
+     
+        vector<int> ans;
+        
+        if(root == NULL)return ans;
+        
+        stack<TreeNode*>st1,st2;
+        
+        st1.push(root);
+        
+        while(!st1.empty()){
+           root = st1.top();
+            st1.pop();
+            st2.push(root);
+            
+            if(root->left)st1.push(root->left);
+            if(root->right)st1.push(root->right);
+        }
+        while(!st2.empty()){
+            ans.push_back(st2.top()->val);
+            st2.pop();
+        }
+        return ans;
+    }
